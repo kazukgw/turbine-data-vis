@@ -1,7 +1,8 @@
 class RadarChartPoint {
-  constructor(data, field) {
+  constructor(data, field, index) {
     this.data = data;
     this.field = field;
+    this.index = index || 1;
   }
 
   render($container) {
@@ -13,10 +14,10 @@ class RadarChartPoint {
       .attr('r', 10)
       .attr('alt', (d)=>{ return d.temp })
       .attr('cx', (d, i)=>{
-        return self.field.getPointWithAxisIndex(i, d.value).x;
+        return self.field.getPointWithAxisIndex(i, d[self.index]).x;
       })
       .attr('cy', (d, i)=>{
-        return self.field.getPointWithAxisIndex(i, d.value).y;
+        return self.field.getPointWithAxisIndex(i, d[self.index]).y;
       })
       .attr('class', '.node')
       .style('fill', '#ff00ff')

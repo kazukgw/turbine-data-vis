@@ -22,10 +22,14 @@ class ApplicationController {
   }
 
   loadDataAndRenderChart(file) {
-    var data = TemperatureData.load(file);
-    this.$chartsBox = document.querySelector('#charts-box')
-    var chart = new RadarChart(data, this.$chartsBox, 600);
-    chart.render();
+    var self = this;
+    TemperatureData.load(file).then((data)=>{
+      self.$chartsBox = document.querySelector('#charts-box')
+      var chart = new RadarChart(data, self.$chartsBox, 600);
+      chart.render();
+    }).catch((e)=>{
+      throw e;
+    });
   }
 
   dispatch(eventName, ...args) {

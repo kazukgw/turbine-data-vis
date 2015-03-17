@@ -19,10 +19,10 @@ class RadarChartAxis {
       .attr('x1', this.center.x)
       .attr('y1', this.center.y)
       .attr('x2', (_d, i)=>{
-        return self.field.getPointWithAxisIndex(i, self.data.getMax()).x;
+        return self.field.getPointWithAxisIndex(i, self.data.getMax(1)).x;
       })
       .attr('y2', (_d, i)=>{
-        return self.field.getPointWithAxisIndex(i, self.data.getMax()).y;
+        return self.field.getPointWithAxisIndex(i, self.data.getMax(1)).y;
       })
       .attr('class', 'axis-line')
       .style('stroke', 'grey')

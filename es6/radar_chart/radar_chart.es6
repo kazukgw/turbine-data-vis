@@ -21,10 +21,10 @@ class RadarChart {
     this.axis = new Axis(this.data, this.field);
     this.$axisBox = this.$chartBox.append('g').attr('class', 'axis-box');
 
-    this.point = new Point(this.data, this.field);
+    this.point = new Point(this.data, this.field, 1);
     this.$pointsBox = this.$chartBox.append('g').attr('class', 'points-box');
 
-    this.polygon = new Polygon(this.data, this.field);
+    this.polygon = new Polygon(this.data, this.field, 1);
     this.$polygonBox = this.$chartBox.append('g').attr('class', 'polygon-box');
   }
 

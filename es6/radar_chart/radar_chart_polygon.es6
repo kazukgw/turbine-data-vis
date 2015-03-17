@@ -1,7 +1,8 @@
 class RadarChartPolygon {
-  constructor(data, field) {
+  constructor(data, field, index) {
     this.data = data;
     this.field = field;
+    this.index = index;
   }
 
   render($container) {
@@ -18,7 +19,7 @@ class RadarChartPolygon {
   _toPoints() {
     var self = this;
     return this.data.rows.map((d, i)=>{
-      return self.field.getPointWithAxisIndex(i, d.value).toArray().join(',');
+      return self.field.getPointWithAxisIndex(i, d[self.index]).toArray().join(',');
     }).join(' ');
   }
 }
