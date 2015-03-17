@@ -30,10 +30,9 @@ class RadarChartField {
 
   getPointWithAxisIndex(axisIndex, value) {
     var degree = this.degrees[axisIndex];
-    var x = - Math.cos(this._toRadian(degree));
-    // y は反転する
+    var x = Math.cos(this._toRadian(degree));
     var y = Math.sin(this._toRadian(degree));
-    var vec = new Vector(x, y);
+    var vec = new Vector(y, - x);
     var scalar = value / this.dataRange * (this.size/2);
     return this.center.clone().add(vec.multiplyScalar(scalar));
   }

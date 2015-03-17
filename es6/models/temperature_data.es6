@@ -14,6 +14,7 @@ class TemperatureData {
   constructor(data) {
     this.rows = data;
     this.rows = [
+      {degree: 0, value: 20},
       {degree: 45, value: 30},
       {degree: 90, value: 60},
       {degree: 135, value: 20},
