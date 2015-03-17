@@ -43,6 +43,10 @@ class TemperatureData {
     this.rows = this.raw.slice(dataRow);
   }
 
+  getSeriesCount() {
+    return this.rows[0].length - 1;
+  }
+
   getDegrees() {
     return this.rows.map((row)=>{ return row[0]; });
   }

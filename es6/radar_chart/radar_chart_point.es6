@@ -1,3 +1,4 @@
+var config = require('../config');
 class RadarChartPoint {
   constructor(data, field, index) {
     this.data = data;
@@ -7,21 +8,20 @@ class RadarChartPoint {
 
   render($container) {
     var self = this;
+    this.$container = $container;
     this.$points = $container.selectAll('.point');
     this.$points.data(this.data.rows)
       .enter()
       .append('svg:circle')
-      .attr('r', 10)
-      .attr('alt', (d)=>{ return d.temp })
+      .attr('r', config.point.r)
       .attr('cx', (d, i)=>{
         return self.field.getPointWithAxisIndex(i, d[self.index]).x;
       })
       .attr('cy', (d, i)=>{
         return self.field.getPointWithAxisIndex(i, d[self.index]).y;
       })
-      .attr('class', '.node')
-      .style('fill', '#ff00ff')
-      .style('fill-opacity', 0.9);
+      .attr('class', 'point')
+      .style(config.style.point[this.index - 1]);
   }
 }
 

@@ -1,37 +1,62 @@
+var _ = require('lodash');
 var Field = require('./radar_chart_field');
 var Axis = require('./radar_chart_axis');
 var Point = require('./radar_chart_point');
 var Polygon = require('./radar_chart_polygon');
+var Series = require('./radar_chart_series');
 class RadarChart {
-  constructor(data, $container, size) {
+  constructor(data) {
     this.data = data;
-    this.size = size;
+  }
+
+  render($container, size) {
     this._container = $container;
     this.$container = d3.select($container);
 
-    this.$chartBox =
-      this.$container.append('svg')
-      .attr('width', size)
-      .attr('height', size)
-      .attr('class', 'chart-box');
+    this.size = size || this.$container.attr('offsetWidth')/2;
 
-    this.field = new Field(data, size);
-    this.field.setCenter(size/2, size/2);
+    this._setField();
+    this._setAxis();
+    this._setSeries();
 
-    this.axis = new Axis(this.data, this.field);
-    this.$axisBox = this.$chartBox.append('g').attr('class', 'axis-box');
+    this.$chartContainer = this.$container
+                               .append('svg')
+                               .attr('width', size)
+                               .attr('height', size)
+                               .attr('class', 'chart-container');
 
-    this.point = new Point(this.data, this.field, 1);
-    this.$pointsBox = this.$chartBox.append('g').attr('class', 'points-box');
+    this.$axisContainer = this.$chartContainer
+                              .append('g').attr('class', 'axis-container');
+    this.axis.render(this.$axisContainer);
 
-    this.polygon = new Polygon(this.data, this.field, 1);
-    this.$polygonBox = this.$chartBox.append('g').attr('class', 'polygon-box');
+    var self = this;
+    this.seriesArr.forEach((s)=>{
+      var $seriesContainer = self.$chartContainer
+                                 .append('g')
+                                 .attr('data-series-index', s.index)
+                                 .attr('class', 'series-container');
+      s.render($seriesContainer);
+    });
   }
 
-  render() {
-    this.axis.render(this.$axisBox);
-    this.polygon.render(this.$polygonBox);
-    this.point.render(this.$pointsBox);
+  _setSeries() {
+    this.seriesArr = [];
+    var self = this;
+    _.times(this.data.getSeriesCount(), (index)=>{
+      var realIndex = index + 1;
+      var point = new Point(self.data, self.field, realIndex);
+      var polygon = new Polygon(self.data, self.field, realIndex);
+      self.seriesArr.push(new Series(point, polygon, index));
+    });
+  }
+
+  _setAxis() {
+    this.axis = new Axis(this.data, this.field);
+  }
+
+  _setField() {
+    this.field = new Field(this.data, this.size);
+    this.field.setCenter(this.size/2, this.size/2);
   }
 }
 

@@ -1,3 +1,4 @@
+var config = require('../config');
 class RadarChartPolygon {
   constructor(data, field, index) {
     this.data = data;
@@ -7,13 +8,11 @@ class RadarChartPolygon {
 
   render($container) {
     var self = this;
+    this.$container = $container;
     this.$polygons = $container.append('svg:polygon');
     this.$polygons.attr('class', 'polygon')
       .attr('points', this._toPoints())
-      .style('stroke-width', '2px')
-      .style('stroke', '#f2faf1')
-      .style('fill', '#0a4ed0')
-      .style('fill-opacity', 0.6);
+      .style(config.style.polygon[this.index - 1]);
   }
 
   _toPoints() {
