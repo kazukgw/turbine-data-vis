@@ -1,8 +1,12 @@
+var config = require('../config');
 class RadarChartSeries {
-  constructor(point, polygon, index) {
+  constructor(data, point, polygon, index) {
     this.index = index;
+    this.data = data;
+    this.seriesName = this.data.getSeriesName(index);
     this.point = point;
     this.polygon = polygon;
+    this.color = config.color[index];
   }
 
   render($container) {

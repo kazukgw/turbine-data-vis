@@ -38,8 +38,15 @@ class TemperatureData {
       throw new Error('データが存在しません');
     }
 
+    if( /[\.\d]+/.test(this.raw[headerRow][0]) ) {
+      this.header = ['degree'].concat(_.range(this.raw[headerRow].length - 1)
+                     .map((i)=>{ return `系列${i+1}`; }));
+      dataRow = headerRow;
+    } else {
+      this.header = this.raw[headerRow];
+    }
+
     this.title = titleRow ? data[titleRow] : (new Date());
-    this.header = this.raw[headerRow];
     this.rows = this.raw.slice(dataRow);
   }
 
@@ -57,6 +64,10 @@ class TemperatureData {
 
   getMax(index) {
     return _.max(this.rows.map((row)=>{ return row[index || 1]; }));
+  }
+
+  getSeriesName(index) {
+    return this.header[index+1];
   }
 
   static _loadFromFile(file) {

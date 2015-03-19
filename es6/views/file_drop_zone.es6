@@ -1,26 +1,28 @@
 var is = require('is_js');
+var DropZone = require('dropzone');
+
 class FileDropZone {
   constructor(elOrSelector, controller) {
     if(is.string(elOrSelector)) {
       elOrSelector =document.querySelector(elOrSelector)
     }
     this.$el = elOrSelector;
-    this.$fileField = this.$el.querySelector('input[type=file]');
-    this.$fileField.addEventListener('change',
-      this.onChangeFileSelect.bind(this));
+    this.$fileField = new DropZone(this.$el, {
+      url: '/',
+      clickable: true,
+      previewTemplate: '<div style="display:none"></div>',
+      accept: this.onAddedFile.bind(this)
+    });
+
+    // this.$fileField.on('addedfile', this.onAddedFile.bind(this));
 
     this.controller = controller;
   }
 
-  onChangeFileSelect(e) {
-    console.log('select file:', e);
-    var files = e.target.files;
-    if(files.length > 1) {
-      alert('ごめん。ファイルは1つだけ選んでほしいねん。');
-      throw new Error('ファイルが複数選択されました');
-    }
-
-    this.controller.dispatch('FileSelect', files[0]);
+  onAddedFile(file, done) {
+    console.log('select file:', file);
+    this.controller.dispatch('FileSelect', file);
+    done('uploadはしません');
   }
 }
 

@@ -37,13 +37,19 @@ var pointDefault = {
 };
 
 var polygonDefault = {
-  'stroke-width': '2px',
+  'stroke-width': '1px',
   'fill-opacity': 0
 };
 
 module.exports = {
+  color: [
+    colorPrimary,
+    colorSecondary,
+    colorSecondary2,
+    colorComplement
+  ],
   point: {
-    r: 5
+    r: 2
   },
   style: {
     point: [
@@ -57,7 +63,22 @@ module.exports = {
       extend(polygonDefault, { stroke: colorSecondary[1] }),
       extend(polygonDefault, { stroke: colorSecondary2[1] }),
       extend(polygonDefault, { stroke: colorComplement[1] })
-    ]
+    ],
+    axisLine: {
+      'stroke': 'grey',
+      'stroke-width': '0.1px',
+      'stroke-opacity': '0.6'
+    },
+    axisTitle: {
+      'font-size': '10px',
+      'stroke': 'grey',
+      'stroke-width': '0.5px'
+    },
+    axisText: {
+      'font-size': '9px',
+      'stroke': '#999',
+      'stroke-width': '0.5px'
+    }
   }
 };
 

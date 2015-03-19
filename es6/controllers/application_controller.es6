@@ -26,7 +26,7 @@ class ApplicationController {
     TemperatureData.load(file).then((data)=>{
       self.$chartsContainer = document.querySelector('#charts-wrapper')
       var chart = new RadarChart(data);
-      chart.render(self.$chartsContainer, 500);
+      chart.render(self.$chartsContainer, 400);
     }).catch((e)=>{
       throw e;
     });

@@ -2,16 +2,40 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" >
+  <link href="css/style.css" rel="stylesheet" type="text/css">
   <title></title>
 </head>
 <body>
-  <div id="container">
-    <div id="charts-wrapper">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">タービンデータ可視化アプリケーション</a>
     </div>
-    <div id="file-drop-zone">
-      <input class="file-field" type="file">
+  </nav>
+  <div class="row main">
+    <div id="sidebar" class="col-xs-3">
+      <div id="file-list">
+        <div class="container-header col-xs-12">File List</div>
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="#">test</a></li>
+          <li><a href="#">test</a></li>
+          <li><a href="#">test</a></li>
+        </ul>
+      </div>
+      <div id="file-drop-zone-dummy" class="">
+        <p>Click Here or DnD File!!</p>
+      </div>
+      <div id="file-drop-zone" class="">
+        <input class="file-field" type="file" name="file" style="display: none">
+      </div>
+    </div>
+    <div id="container" class="col-xs-9">
+      <div id="charts-wrapper" class="col-xs-12">
+      </div>
     </div>
   </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="js/index.js"></script>
 </body>
