@@ -1,42 +1,38 @@
 html, body, div.main {
-  height: 100%;
-}
+  height: 100%; }
 
 .main {
-  padding-top: 50px;
-}
+  padding-top: 60px; }
 
 #sidebar {
-  height: 100%;
-}
+  height: 100%; }
 
-.container-header {
+.sidebar-header {
   background-color: #ddd;
   font-size: 24px;
   color: #333;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
+  padding: 0 10px;
+  border-bottom: 1px solid #ccc; }
 
-#file-list {
+.file-list {
   height: 80%;
-  background-color: #eee;
-  border-right: 1px solid #ccc;
-}
+  border-right: 1px solid #ccc; }
+  .file-list input[type="checkbox"] {
+    margin-right: 5px; }
+  .file-list .nav-pills > li > a {
+    border-radius: 0; }
 
-#file-drop-zone {
+.file-drop-zone {
   width: 100%;
   height: 20%;
   opacity: 0;
   cursor: pointer;
   z-index: 1001;
-  transform: translateY(-100%);
-}
+  transform: translateY(-100%); }
 
-#file-drop-zone-dummy {
-  width: 100%;
+.file-drop-zone-dummy {
   height: 20%;
-  border-top: 1px dotted grey;
+  border-top: 1px solid #ccc;
   border-right: 1px solid #ccc;
   text-align: center;
   color: #999;
@@ -44,24 +40,31 @@ html, body, div.main {
   cursor: pointer;
   background-color: #ddd;
   z-index: 1000;
-}
+  padding-top: 10%; }
+  .file-drop-zone-dummy i {
+    font-size: 40px; }
 
-#file-drop-zone-dummy p {
-  display: inline-block;
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-100%, -50%);
-}
+#charts-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: scroll; }
+
+.chart-container-wrapper .file-name {
+  display: flex;
+  height: 25px;
+  background-color: #566473;
+  padding-left: 10px;
+  color: white; }
+.chart-container-wrapper .scale-button {
+  position: absolute;
+  cursor: pointer;
+  cursor: se-resize; }
+.chart-container-wrapper .chart-container {
+  border: 1px solid #ddd; }
 
 #container {
   height: 100%;
-  overflow: scroll;
-}
+  overflow: scroll; }
 
-#charts-wrapper{
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-}
-
+[v-cloak] {
+  display: none; }

@@ -3,34 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" >
+  <link rel="stylesheet" href="css/bootstrap.min.css" >
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link href="css/style.css" rel="stylesheet" type="text/css">
   <title></title>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">タービンデータ可視化アプリケーション</a>
+      <a class="navbar-brand" href="#">Watchable</a>
     </div>
   </nav>
   <div class="row main">
-    <div id="sidebar" class="col-xs-3">
-      <div id="file-list">
-        <div class="container-header col-xs-12">File List</div>
-        <ul class="nav nav-pills nav-stacked">
-          <li><a href="#">test</a></li>
-          <li><a href="#">test</a></li>
-          <li><a href="#">test</a></li>
+    <div id="sidebar" class="col-xs-2">
+      <div class="file-list">
+        <div class="sidebar-header col-xs-12">
+          <h4>File List</h4>
+        </div>
+        <ul class="nav nav-pills nav-stacked" v-cloak>
+          <li v-repeat="f:files">
+            <a href="#"><input type="checkbox">{{f.name}}</a>
+          </li>
         </ul>
       </div>
-      <div id="file-drop-zone-dummy" class="">
-        <p>Click Here or DnD File!!</p>
+      <div class="file-drop-zone-dummy">
+        <p>Drop files here or click</p>
+        <i class="fa fa-arrow-circle-o-down"></i>
       </div>
-      <div id="file-drop-zone" class="">
+      <div class="file-drop-zone">
         <input class="file-field" type="file" name="file" style="display: none">
       </div>
     </div>
-    <div id="container" class="col-xs-9">
+    <div id="container" class="col-xs-10">
       <div id="charts-wrapper" class="col-xs-12">
       </div>
     </div>

@@ -22,7 +22,6 @@ class TemperatureData {
     this.raw = data.data;
     var titleRow, headerRow, dataRow;
     for(let i = 0, l = this.raw.length; i < l; i++){
-      console.log(this.raw[i][0]);
       if((/\[title\]/i).test(this.raw[i][0])) {
         titleRow = i+1;
       }
@@ -94,3 +93,5 @@ class TemperatureData {
 }
 
 module.exports = TemperatureData;
+
+

@@ -14,13 +14,10 @@ class FileDropZone {
       accept: this.onAddedFile.bind(this)
     });
 
-    // this.$fileField.on('addedfile', this.onAddedFile.bind(this));
-
     this.controller = controller;
   }
 
   onAddedFile(file, done) {
-    console.log('select file:', file);
     this.controller.dispatch('FileSelect', file);
     done('uploadはしません');
   }

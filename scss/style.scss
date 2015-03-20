@@ -1,0 +1,25 @@
+@import 'bourbon';
+
+html, body, div.main {
+  height: 100%;
+}
+
+.main {
+  padding-top: 60px;
+}
+
+#sidebar {
+  height: 100%;
+}
+
+@import 'sidebar';
+@import 'radar_chart';
+
+#container {
+  height: 100%;
+  overflow: scroll;
+}
+
+[v-cloak] {
+  display: none;
+}
