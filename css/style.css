@@ -49,18 +49,20 @@ html, body, div.main {
   height: 100%;
   overflow: scroll; }
 
-.chart-container-wrapper .file-name {
-  display: flex;
-  height: 25px;
-  background-color: #566473;
-  padding-left: 10px;
-  color: white; }
-.chart-container-wrapper .scale-button {
-  position: absolute;
-  cursor: pointer;
-  cursor: se-resize; }
-.chart-container-wrapper .chart-container {
-  border: 1px solid #ddd; }
+.chart-window {
+  border: 1px solid #ddd;
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+  .chart-window .file-name {
+    display: flex;
+    height: 25px;
+    background-color: #566473;
+    padding-left: 10px;
+    color: white; }
+  .chart-window .scale-button {
+    position: absolute;
+    cursor: pointer;
+    cursor: se-resize; }
 
 #container {
   height: 100%;

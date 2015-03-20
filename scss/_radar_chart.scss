@@ -4,7 +4,11 @@
   overflow: scroll;
 }
 
-.chart-container-wrapper {
+.chart-window {
+  border: 1px solid #ddd;
+  -webkit-transform: translate(0px, 0px);
+  transform: translate(0px, 0px);
+
   .file-name {
     display: flex;
     height: 25px;
@@ -17,10 +21,6 @@
     position: absolute;
     cursor: pointer;
     cursor: se-resize;
-  }
-
-  .chart-container {
-    border: 1px solid #ddd;
   }
 }
 

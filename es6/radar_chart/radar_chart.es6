@@ -8,104 +8,64 @@ var Caption = require('./radar_chart_caption');
 class RadarChart {
   constructor(data, config) {
     this.data = data;
-    this.topBottomPadding = 50;
-    this.leftRightPadding = 150;
-    this.fileNameHeight = 25;
-    this.config = config;
-  }
+    this.config = config || {};
 
-  render($container, size) {
-    var self = this;
-    this._container = $container;
-    this.$container = d3.select($container);
-
-    this.center = {
-      x: size/2 + this.leftRightPadding,
-      y: size/2 + this.topBottomPadding
-    };
-    this.size = size;
+    this.size = this.config.size || 400;
+    this.topBottomPadding = this.config.topBottomPadding || 50;
+    this.leftRightPadding = this.config.leftRightPadding || 150;
     this.width = this.size+(this.leftRightPadding*2);
     this.height = this.size+(this.topBottomPadding*2);
+    this.center = {
+      x: this.size/2 + this.leftRightPadding,
+      y: this.size/2 + this.topBottomPadding
+    };
+  }
+
+  render(chartWindow) {
+    var self = this;
+    this.chartWindow = chartWindow;
+    this.d3$chartWindow = this.chartWindow.d3$chartWindow;
+    var bWidth =  this.chartWindow.chartOffset.width;
+    var bHeight = this.chartWindow.chartOffset.height;
 
     this._setField();
     this._setAxis();
     this._setSeries();
 
-    this.$chartContainerWrapper = this.$container
-                                      .append('div')
-                                      .attr('class','chart-container-wrapper')
-                                      .style('width', this.width + 'px')
-                                      .style('height', (this.height + this.fileNameHeight) + 'px');
-
-    this.$chartContainerWrapper.append('div').attr('class','file-name')
-                               .append('span').text(this.config.fileName);
-
-    this.$scaleButton = this.$chartContainerWrapper.append('div')
-                               .attr('class','scale-button')
-                               .style('left', this.width + 'px')
-                               .style('top', (this.height + 6) + 'px');
-    this.$scaleButton.append('i').attr('class','fa fa-arrows-alt');
-
-    var sb = this.$scaleButton[0][0];
-    sb.addEventListener('click', function init() {
-        sb.removeEventListener('click', init, false);
-        // sb.className = p.className + ' resizable';
-        // var resizer = document.createElement('div');
-        // resizer.className = 'scale-button';
-        // sb.appendChild(resizer);
-        sb.addEventListener('mousedown', initDrag, false);
-    }, false);
-
-    var startX, startY, startWidth, startHeight;
-    function initDrag(e) {
-      console.log('init drag');
-      startX = e.clientX;
-      startY = e.clientY;
-      startWidth = parseInt(document.defaultView.getComputedStyle(self.$chartContainerWrapper[0][0]).width, 10);
-      startHeight = parseInt(document.defaultView.getComputedStyle(self.$chartContainerWrapper[0][0]).height, 10);
-      document.documentElement.addEventListener('mousemove', doDrag, false);
-      document.documentElement.addEventListener('mouseup', stopDrag, false);
-    }
-
-
-    function doDrag(e) {
-      console.log('drag');
-       self.$chartContainerWrapper[0][0].style.width = (startWidth + e.clientX - startX) + 'px';
-       self.$chartContainerWrapper[0][0].style.height = (startHeight + e.clientY - startY) + 'px';
-    }
-
-    function stopDrag(e) {
-        console.log('drag stop');
-        document.documentElement.removeEventListener('mousemove', doDrag, false);    document.documentElement.removeEventListener('mouseup', stopDrag, false);
-    }
-
-    this.$chartContainer = this.$chartContainerWrapper
+    this.d3$chartContainer = this.d3$chartWindow
                                .append('svg')
-                               .attr('width', this.width)
-                               .attr('height', this.height)
+                               .attr('width', bWidth)
+                               .attr('height', bHeight)
+                               .attr('viewBox', `0 0 ${this.width} ${this.height}`)
                                .attr('class', 'chart-container');
 
-    this.$axisContainer = this.$chartContainer
+    this.d3$axisContainer = this.d3$chartContainer
                               .append('g').attr('class', 'axis-container');
-    this.axis.render(this.$axisContainer);
+    this.axis.render(this.d3$axisContainer);
 
     this.seriesArr.forEach((s)=>{
-      var $seriesContainer = self.$chartContainer
+      var d3$seriesContainer = self.d3$chartContainer
                                  .append('g')
                                  .attr('data-series-index', s.index)
                                  .attr('class', 'series-container');
-      s.render($seriesContainer);
+      s.render(d3$seriesContainer);
     });
 
     var captionX = this.size + this.leftRightPadding;
     var captionY = this.topBottomPadding;
     this.caption = new Caption(this.seriesArr);
-    this.$captionContainer = this.$chartContainer
+    this.d3$captionContainer = this.d3$chartContainer
                                .append('g')
                                .attr('class', 'caption')
                                .attr('transform', `translate(${captionX},${captionY})`);
 
-    this.caption.render(this.$captionContainer);
+    this.caption.render(this.d3$captionContainer);
+  }
+
+  resetSize() {
+    var bWidth =  this.chartWindow.chartOffset.width;
+    var bHeight = this.chartWindow.chartOffset.height;
+    this.d3$chartContainer.attr({ width: bWidth, height: bHeight });
   }
 
   _setSeries() {

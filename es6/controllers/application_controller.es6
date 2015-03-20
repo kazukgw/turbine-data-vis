@@ -7,8 +7,8 @@ var is = require('is_js');
 var _ = require('lodash');
 // Views
 var FileDropZone = require('../views/file_drop_zone');
-var RadarChart = require('../radar_chart/radar_chart');
 var FileListView = require('../views/file_list_view');
+var ChartWindow = require('../views/chart_window');
 // Models
 var TemperatureData = require('../models/temperature_data');
 var FileList = require('../models/file_list');
@@ -22,15 +22,16 @@ class ApplicationController {
 
     this.fileDropZone = new FileDropZone('.file-drop-zone', this);
     this.fileList = new FileListView('.file-list', FileList);
+    this.$chartsContainer = document.querySelector('#charts-wrapper')
   }
 
   loadDataAndRenderChart(file) {
     var self = this;
     FileList.addFile(file);
+
     TemperatureData.load(file).then((data)=>{
-      self.$chartsContainer = document.querySelector('#charts-wrapper')
-      var chart = new RadarChart(data, { fileName: file.name });
-      chart.render(self.$chartsContainer, 400);
+      var chartWindow = new ChartWindow(data, { fileName: file.name });
+      chartWindow.render('#'+self.$chartsContainer.id, {});
     }).catch((e)=>{
       throw e;
     });
