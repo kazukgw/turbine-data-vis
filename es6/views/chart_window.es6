@@ -19,8 +19,7 @@ class ChartWindow {
       x: 0,
       y: 0,
       width: this.config.width || 700,
-      height: this.config.height ||
-             (500 - this.config.fileNameHeight),
+      height: this.config.height || (500 - this.config.fileNameHeight),
     };
 
     ChartWindow.windows.push(this);

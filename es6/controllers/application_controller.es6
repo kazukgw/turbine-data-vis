@@ -31,10 +31,8 @@ class ApplicationController {
 
     TemperatureData.load(file).then((data)=>{
       var chartWindow = new ChartWindow(data, { fileName: file.name });
-      chartWindow.render('#'+self.$chartsContainer.id, {});
-    }).catch((e)=>{
-      throw e;
-    });
+      chartWindow.render('#' + self.$chartsContainer.id, {});
+    }).catch((e)=>{ throw e });
   }
 
   dispatch(eventName, ...args) {

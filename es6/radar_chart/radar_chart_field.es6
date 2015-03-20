@@ -33,7 +33,7 @@ class RadarChartField {
     var x = Math.cos(this._toRadian(degree));
     var y = Math.sin(this._toRadian(degree));
     var vec = new Vector(y, - x);
-    var scalar = value / this.dataRange * (this.size/2);
+    var scalar = value / this.dataRange * this.size / 2;
     return this.center.clone().add(vec.multiplyScalar(scalar));
   }
 

@@ -38,8 +38,8 @@ class TemperatureData {
     }
 
     if( /[\.\d]+/.test(this.raw[headerRow][0]) ) {
-      this.header = ['degree'].concat(_.range(this.raw[headerRow].length - 1)
-                     .map((i)=>{ return `系列${i+1}`; }));
+      this.header = ['degree']
+      this.header.concat(_.range(this.raw[headerRow].length - 1).map((i)=> `系列${i+1}`));
       dataRow = headerRow;
     } else {
       this.header = this.raw[headerRow];
@@ -54,15 +54,19 @@ class TemperatureData {
   }
 
   getDegrees() {
-    return this.rows.map((row)=>{ return row[0]; });
+    return this.rows.map((row) => row[0]);
+  }
+
+  getMax() {
+    return _(this.rows).map((r) => _.rest(r)).flatten().max();
   }
 
   getMaxDegrees() {
     return _.max(this.getDegrees());
   }
 
-  getMax(index) {
-    return _.max(this.rows.map((row)=>{ return row[index || 1]; }));
+  getMaxInSeries(seriesIndex) {
+    return _(this.rows).map((r) => r[seriesIndex || 1]).max();
   }
 
   getSeriesName(index) {
@@ -93,5 +97,3 @@ class TemperatureData {
 }
 
 module.exports = TemperatureData;
-
-

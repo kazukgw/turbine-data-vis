@@ -65,13 +65,13 @@ module.exports = {
       extend(polygonDefault, { stroke: colorComplement[1] })
     ],
     axisLine: {
-      'stroke': 'grey',
+      'stroke': '#1D1D1D',
       'stroke-width': '0.1px',
-      'stroke-opacity': '0.6'
+      'stroke-opacity': '0.9'
     },
     axisTitle: {
       'font-size': '10px',
-      'stroke': 'grey',
+      'stroke': '#1D1D1D',
       'stroke-width': '0.5px'
     },
     axisText: {

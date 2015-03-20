@@ -4,7 +4,7 @@ var DropZone = require('dropzone');
 class FileDropZone {
   constructor(elOrSelector, controller) {
     if(is.string(elOrSelector)) {
-      elOrSelector =document.querySelector(elOrSelector)
+      elOrSelector = document.querySelector(elOrSelector)
     }
     this.$el = elOrSelector;
     this.$fileField = new DropZone(this.$el, {

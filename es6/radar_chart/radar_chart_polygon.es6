@@ -10,9 +10,10 @@ class RadarChartPolygon {
     var self = this;
     this.$container = $container;
     this.$polygons = $container.append('svg:polygon');
-    this.$polygons.attr('class', 'polygon')
-      .attr('points', this._toPoints())
-      .style(config.style.polygon[this.index - 1]);
+    this.$polygons
+        .attr('class', 'polygon')
+        .attr('points', this._toPoints())
+        .style(config.style.polygon[this.index - 1]);
   }
 
   _toPoints() {

@@ -14,12 +14,8 @@ class RadarChartPoint {
       .enter()
       .append('svg:circle')
       .attr('r', config.point.r)
-      .attr('cx', (d, i)=>{
-        return self.field.getPointWithAxisIndex(i, d[self.index]).x;
-      })
-      .attr('cy', (d, i)=>{
-        return self.field.getPointWithAxisIndex(i, d[self.index]).y;
-      })
+      .attr('cx', (d, i) => self.field.getPointWithAxisIndex(i, d[self.index]).x)
+      .attr('cy', (d, i) => self.field.getPointWithAxisIndex(i, d[self.index]).y)
       .attr('class', 'point')
       .style(config.style.point[this.index - 1]);
   }
