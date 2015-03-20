@@ -8,17 +8,14 @@ html, body, div.main {
   padding-top: 60px;
 }
 
-#sidebar {
+#container {
   height: 100%;
+  overflow: scroll;
+  padding: 0;
 }
 
 @import 'sidebar';
 @import 'radar_chart';
-
-#container {
-  height: 100%;
-  overflow: scroll;
-}
 
 [v-cloak] {
   display: none;

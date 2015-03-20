@@ -69,11 +69,14 @@ class ChartWindow {
 
   _interactize() {
     var self = this;
-    var _offset = { x:0, y:0 };
     var index = ChartWindow.windows.length - 1;
     interact(`div.chart-window-${index}`)
       .draggable({
         autoScroll: true,
+        restrict: {
+          restriction: "parent",
+          elementRect: { top: 0, left: 0, bottom: 0, right: 1 }
+        },
         onmove: (e)=>{
           var target = e.target,
           // keep the dragged position in the data-x/data-y attributes
@@ -98,9 +101,11 @@ class ChartWindow {
       })
       .on('resizemove', (e)=>{
         var target = e.target;
-        target.style.width  = e.rect.width + 'px';
-        target.style.height = e.rect.height + 'px';
-        self.setSize(e.rect.width, e.rect.height);
+        var width = (e.rect.width < 200) ? 200 : e.rect.width;
+        var height = (e.rect.height < 200) ? 200 : e.rect.height;
+        target.style.width  = width + 'px';
+        target.style.height = height + 'px';
+        self.setSize(width, height);
       });
   }
 }
