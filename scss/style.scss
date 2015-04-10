@@ -1,6 +1,6 @@
 @import 'bourbon';
 
-html, body, div.main {
+html, body, div.main-wrapper, div.main {
   height: 100%;
 }
 
@@ -17,6 +17,11 @@ html, body, div.main {
 @import 'sidebar';
 @import 'radar_chart';
 
-[v-cloak] {
-  display: none;
+.modal {
+  .text-primary {
+    color: white;
+  }
+  .close {
+    color: #ddd;
+  }
 }
