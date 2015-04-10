@@ -1,53 +1,70 @@
 var _ = require('lodash');
+var is = require('is_js');
 
-var colorPrimary = [
-  '#FE4721',
-  '#FF8D75',
-  '#FF6A4B',
-  '#D72702',
-  '#A91D00'
-];
+var Config = {};
 
-var colorSecondary = [
-  '#FEDF21',
-  '#FFEC75',
-  '#FFE64B',
-  '#D7B902',
-  '#A99100'
-];
+/*
+class Base {
+  constructor(override = {}) {
+    this.raw = {};
+    _.assign(this.raw, override);
+  }
 
-var colorSecondary2 = [
-  '#5126AE',
-  '#8869CC',
-  '#6944B9',
-  '#3A1093',
-  '#2C0B73'
-];
+  get(key) {
 
-var colorComplement = [
-  '#18B854',
-  '#61D38B',
-  '#39C26C',
-  '#019C3B',
-  '#007A2E'
-];
+  }
 
-var pointDefault = {
-  'fill-opacity': 0.6
-};
+  set(key) {
 
-var polygonDefault = {
-  'stroke-width': '1px',
-  'fill-opacity': 0
-};
+  }
 
+  getFormHtml() {
+    if( is.json(this.formTypes) ) {
+      return this._generateForm();
+    }
+    return false;
+  }
+
+  _generateForm() {
+    var self = this;
+    var html = '<div class="config-form">';
+    _.each(this.formTypes, (v)=>{
+      var method = self[('_' + _.camelCase(v.type))];
+      if(is.not.function(method)) {
+        throw new Error(`${v.type} というフォームタイプは存在しません`);
+      }
+      html += method(v);
+    });
+    html = "</div>";
+  }
+
+  _generateSelect(opt = {}) {
+    return `
+      <div>
+        <select>
+        <%= _.each(opt.options, function(v){ %>
+          <option value="<%= v.value %>"><%= v.display %></option>
+        <% }); %>
+        </select>
+      </div>
+    `;
+  }
+
+  _generateCheckbox(opt = {}) {
+    return ``;
+  }
+
+  _generateRadioButton(opt = {}) {
+  }
+
+  _generateColorPicker(opt = {}) {
+  }
+}
+
+Config.Base = Base;
+
+module.exports = Config;
 module.exports = {
-  color: [
-    colorPrimary,
-    colorSecondary,
-    colorSecondary2,
-    colorComplement
-  ],
   point: {
     r: 2
   },
@@ -65,13 +82,13 @@ module.exports = {
       extend(polygonDefault, { stroke: colorComplement[1] })
     ],
     axisLine: {
-      'stroke': 'grey',
+      'stroke': '#1D1D1D',
       'stroke-width': '0.1px',
-      'stroke-opacity': '0.6'
+      'stroke-opacity': '0.9'
     },
     axisTitle: {
       'font-size': '10px',
-      'stroke': 'grey',
+      'stroke': '#1D1D1D',
       'stroke-width': '0.5px'
     },
     axisText: {
@@ -85,3 +102,4 @@ module.exports = {
 function extend(a, b) {
   return _.assign(_.cloneDeep(a), b);
 }
+*/
