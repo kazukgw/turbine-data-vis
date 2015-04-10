@@ -14,32 +14,8 @@
       <a class="navbar-brand" href="#">Watchable</a>
     </div>
   </nav>
-  <div class="row main">
-    <div id="sidebar" class="col-xs-2">
-      <div class="file-list">
-        <div class="sidebar-header col-xs-12">
-          <h4>File List</h4>
-        </div>
-        <ul class="nav nav-pills nav-stacked" v-cloak>
-          <li v-repeat="f:files">
-            <a href="#"><input type="checkbox">{{f.name}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="file-drop-zone-dummy">
-        <p>Drop files here or click</p>
-        <i class="fa fa-arrow-circle-o-down"></i>
-      </div>
-      <div class="file-drop-zone">
-        <input class="file-field" type="file" name="file" style="display: none">
-      </div>
-    </div>
-    <div id="container" class="col-xs-10">
-      <div id="charts-wrapper" class="col-xs-12">
-      </div>
-    </div>
+  <div class="row main-wrapper">
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="js/index.js"></script>
 </body>

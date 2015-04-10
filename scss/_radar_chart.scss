@@ -6,11 +6,12 @@
 
 .chart-window {
   border: 1px solid #ddd;
+  width: auto;
+  padding: 0;
+  margin: 0;
   -webkit-transform: translate(0px, 0px);
   transform: translate(0px, 0px);
-
   .file-name {
-    display: flex;
     height: 25px;
     background-color: tint(#2c3e50, 20%);
     padding-left: 10px;
