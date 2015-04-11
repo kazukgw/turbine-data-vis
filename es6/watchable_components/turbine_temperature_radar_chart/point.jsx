@@ -1,7 +1,10 @@
 var _ = require('lodash');
 var React = require('react');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var RadarChartPointCircle = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     r: React.PropTypes.number.isRequired,
     cx: React.PropTypes.object.isRequired,

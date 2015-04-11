@@ -1,6 +1,9 @@
 var React = require('react');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var _ = require('lodash');
 var RadarChartLegend = React.createClass({
+  mixins: [PureRenderMixin],
+
   propTypes: {
     x: React.PropTypes.number.isRequired,
     y: React.PropTypes.number.isRequired,

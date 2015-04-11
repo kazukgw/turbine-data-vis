@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const React = require('react');
+const Reflux = require('reflux');
 const OverlayMixin = require('react-bootstrap').OverlayMixin;
 const Modal = require('react-bootstrap').Modal;
 const Button = require('react-bootstrap').Button;
@@ -17,6 +18,19 @@ var ChartWindow = React.createClass({
   getInitialState() {
     var width = 700;
     var height = 500;
+    var configActions = {
+      change: Reflux.createAction('change'),
+      reset: Reflux.createAction('reset')
+    };
+    var configStore =  Reflux.createStore({
+      listenables: configActions,
+      onChange(config) {
+        console.log('update config ======>', config);
+        this.config = config;
+        this.trigger(this.config);
+      },
+      config: {}
+    });
     return {
       width,
       height,
@@ -32,8 +46,15 @@ var ChartWindow = React.createClass({
         height,
         position: 'absolute'
       },
-      isModalOpen: false
+      isModalOpen: false,
+      configStore: configStore,
+      configActions: configActions
     };
+  },
+
+  componentDidMount() {
+    this._interactize();
+    // でモーダルのコンフィグヴューを設定する
   },
 
   render() {
@@ -58,53 +79,44 @@ var ChartWindow = React.createClass({
           <View
             ref='view'
             data={this.props.data}
+            configStore={this.state.configStore}
+            configActions={this.state.configActions}
             outerWidth={this.state.chartOffset.width}
             outerHeight={this.state.chartOffset.height}
-            {...this.getConfig()}
+            {...this.state.configStore.config}
           />
         </div>
       </div>
     );
   },
 
-  getConfig() {
-    var config = {};
-    _.each(this.state, (v, k)=>{
-      if(k === 'data' || k === 'chartOffset') return;
-      config[k] = v;
-    });
-    return config;
-  },
-
-  componentDidMount() {
-    this._interactize();
-    // this.refs.view.state
-    // でモーダルのコンフィグヴューを設定する
-  },
-
-  handleModalToggle() {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    });
-  },
-
   renderOverlay() {
     if (!this.state.isModalOpen) {
       return <span/>;
     }
-    console.log('---->', this.refs.view);
 
+    var Config = this.props.component.config;
     return (
-      <Modal bsStyle='primary' title={`${this.props.component.name} (${this.props.data.fileName})`}
-             onRequestHide={this.handleModalToggle}>
+      <Modal bsStyle='primary'
+        title={this.props.data.key}
+        onRequestHide={this.handleModalToggle}>
         <div className='modal-body'>
-          hgoehgoe
+          <Config
+            {...this.state.configStore.config}
+            configStore={this.state.configStore}
+            configActions={this.state.configActions} />
         </div>
         <div className='modal-footer'>
           <Button onClick={this.handleModalToggle}>Close</Button>
         </div>
       </Modal>
     );
+  },
+
+  handleModalToggle() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen
+    });
   },
 
   handleClickRemoveButton() {
