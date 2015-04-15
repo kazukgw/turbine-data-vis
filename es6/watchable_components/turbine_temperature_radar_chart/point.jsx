@@ -4,8 +4,8 @@ var React = require('react');
 var RadarChartPointCircle = React.createClass({
   propTypes: {
     r: React.PropTypes.number.isRequired,
-    cx: React.PropTypes.object.isRequired,
-    cy: React.PropTypes.object.isRequired,
+    cx: React.PropTypes.number.isRequired,
+    cy: React.PropTypes.number.isRequired,
     style: React.PropTypes.object.isRequired
   },
 
@@ -19,7 +19,7 @@ var RadarChartPointCircle = React.createClass({
 
 var RadarChartPoint = React.createClass({
   propTypes: {
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     field: React.PropTypes.object.isRequired,
     seriesIndex: React.PropTypes.number.isRequired,
     attr: React.PropTypes.object.isRequired,

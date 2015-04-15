@@ -10,7 +10,7 @@ var FileDropZone = React.createClass({
       url: '/', // dummy
       clickable: true,
       previewTemplate: '<div style="display:none"></div>',
-      accept: this.acceptHandler.bind(this)
+      accept: this.acceptHandler
     });
   },
 

@@ -49,7 +49,7 @@ var FileList = React.createClass({
         </div>
         <ul className="nav nav-pills nav-stacked">
           {_.map(this.state.files, (file, fileName)=>{
-            return <File fileName={fileName} />;
+            return <File fileName={fileName} key={fileName}/>;
           })}
         </ul>
       </div>
