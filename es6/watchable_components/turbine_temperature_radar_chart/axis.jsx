@@ -1,8 +1,9 @@
 var _ = require('lodash');
 var React = require('react');
+
 var RadarChartAxis = React.createClass({
   propTypes: {
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     field: React.PropTypes.object.isRequired,
     config: React.PropTypes.object.isRequired
   },
@@ -28,8 +29,10 @@ var RadarChartAxis = React.createClass({
           {degrees.map((d, i)=>{
             var pos2 = p.field.getPointWithAxisIndex(i, p.field.dataRange);
             return (
-              <line className='axis-line-line' style={p.config.axisLine.style}
-                    x1={center.x} y1={center.y} x2={pos2.x} y2={pos2.y} />
+              <line
+                key={i}
+                className='axis-line-line' style={p.config.axisLine.style}
+                x1={center.x} y1={center.y} x2={pos2.x} y2={pos2.y} />
             );
           })}
         </g>
@@ -38,8 +41,10 @@ var RadarChartAxis = React.createClass({
           {degrees.map((d, i)=>{
             var pos = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.1);
             return (
-              <text style={p.config.axisTitle.style}
-                    textAnchor='middle' x={pos.x} y={pos.y} >
+              <text
+                key={i}
+                style={p.config.axisTitle.style}
+                textAnchor='middle' x={pos.x} y={pos.y} >
                 {d}
               </text>
             );
@@ -57,6 +62,7 @@ var RadarChartAxis = React.createClass({
               textPosition.push(pos);
               return (
                 <line
+                  key={axisIndex + '-' + i}
                   className='axis-auxAxis-axis-line'
                   style={p.config.auxAxisLine.style}
                   x1={pos.x} y1={pos.y}
@@ -68,8 +74,9 @@ var RadarChartAxis = React.createClass({
             var axisAuxText = _degrees.map((d, i)=>{
               return (
                 <text
+                  key={axisIndex + '-' + i}
                   className='axis-auxAxis-axis-text'
-                  text-anchor='start'
+                  textAnchor='start'
                   x={textPosition[i].x} y={textPosition[i].y} >
                   {i%3 === 0 ? range : ''}
                 </text>
@@ -77,7 +84,7 @@ var RadarChartAxis = React.createClass({
             });
 
             return (
-              <g className='axis-auxAxis-axis'>
+              <g key={axisIndex} className='axis-auxAxis-axis'>
                 <g>
                   {axisAuxLines}
                 </g>

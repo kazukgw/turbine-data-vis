@@ -14,7 +14,7 @@ var RadarChartLegend = React.createClass({
       config: {
         line: {
           style: {
-            'stroke-width': '2px'
+            strokeWidth: '2px'
           }
         },
         text: {
@@ -38,7 +38,7 @@ var RadarChartLegend = React.createClass({
       <g className='legend' transform={`translate(${this.props.x},${this.props.y})`}>
         {_.range(this.props.data.getSeriesCount()).map((i)=>{
           return (
-            <g>
+            <g key={i}>
               <line
                 style={self.getLineStyle(i)}
                 x1='0' y1={20 * i}
