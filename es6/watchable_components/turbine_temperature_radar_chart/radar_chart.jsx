@@ -91,10 +91,6 @@ var RadarChart = React.createClass({
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-  },
-
   render() {
     var self = this;
     var _props = this.getDynamicProps();
@@ -103,11 +99,12 @@ var RadarChart = React.createClass({
            width={this.props.outerWidth} height={this.props.outerHeight}
            viewBox={`0 0 ${_props.width} ${_props.height}`} >
 
+        <Axis {...this.getAxisProps(_props)} />
+
         {_.range(this.props.data.getSeriesCount()).map((i)=>{
           return (<Series key={i} {...self.getSeriesProps(i, _props)} />)
         })}
 
-        <Axis {...this.getAxisProps(_props)} />
 
         <Legend {...this.getLegendProps(_props)} />
       </svg>

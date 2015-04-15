@@ -75,7 +75,6 @@ var Config = React.createClass({
       case 'color1':
       case 'color2':
       if(/^#[0-9a-fA-F]{6}$/.test) {
-        console.log('color' + (name.match(/(\d)/)[1]*1-1), val);
         this.state.colors[name.match(/(\d)/)[1]*1-1] = val;
       } else {
         valid = false;

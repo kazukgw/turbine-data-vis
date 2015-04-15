@@ -24,7 +24,7 @@ var RadarChartAxis = React.createClass({
     var center = this.getCenter();
     var size = this.getSize();
     return (
-      <g className='axis-container'>
+      <g className='axis-container' style={{zIndex: 50}}>
         <g className='axis-line'>
           {degrees.map((d, i)=>{
             var pos2 = p.field.getPointWithAxisIndex(i, p.field.dataRange);

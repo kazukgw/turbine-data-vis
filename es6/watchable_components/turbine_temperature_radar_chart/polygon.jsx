@@ -16,12 +16,17 @@ var RadarChartPolygon = React.createClass({
     }).join(' ');
   },
 
+  getStyle() {
+    var style = this.props.style;
+    return style;
+  },
+
   render() {
     return (
       <polygon
         className='polygon'
         points={this.getPoints()}
-        style={this.props.style}
+        style={this.getStyle()}
       />
     );
   }
