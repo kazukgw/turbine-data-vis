@@ -52,21 +52,22 @@ var RadarChartAxis = React.createClass({
         </g>
 
         <g className='axis-auxAxis'>
-          {_.range(p.config.auxAxisCount).map((axisIndex)=>{
+          {_.range(p.config.auxAxisCount + 1).map((axisIndex)=>{
             var textPosition = [];
             var range = p.field.dataRange / p.config.auxAxisCount * axisIndex;
 
             var axisAuxLines = _degrees.map((d, i)=>{
               var pos = p.field.getPointWithAxisIndex(i, range);
-              var pos2 = p.field.getPointWithAxisIndex(i + 1, range);
+              var center = p.field.getCenter();
+              var r = p.field.getLengthWithValue(range);
               textPosition.push(pos);
               return (
-                <line
+                <circle
                   key={axisIndex + '-' + i}
                   className='axis-auxAxis-axis-line'
                   style={p.config.auxAxisLine.style}
-                  x1={pos.x} y1={pos.y}
-                  x2={pos2.x} y2={pos2.y}
+                  cx={center.x} cy={center.y}
+                  r={r}
                 />
               );
             });

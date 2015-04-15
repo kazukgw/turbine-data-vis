@@ -20,7 +20,8 @@ var Config = React.createClass({
           },
           auxAxisLine: {
             style: {
-              stroke: '#abb'
+              stroke: '#abb',
+              fillOpacity: 0
             }
           }
         },

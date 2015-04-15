@@ -29,6 +29,10 @@ class RadarChartField {
     this.dataRange = range;
   }
 
+  getLengthWithValue(value) {
+    return parseInt(value) / parseInt(this.dataRange) * parseInt(this.size) / 2;
+  }
+
   getPointWithAxisIndex(axisIndex, value) {
     var degree = this.degrees[axisIndex];
     var x = Math.cos(this._toRadian(degree));
