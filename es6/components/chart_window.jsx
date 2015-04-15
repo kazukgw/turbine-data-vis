@@ -1,11 +1,11 @@
-const _ = require('lodash');
-const React = require('react');
-const Reflux = require('reflux');
-const OverlayMixin = require('react-bootstrap').OverlayMixin;
-const Modal = require('react-bootstrap').Modal;
-const Button = require('react-bootstrap').Button;
-const interact = require('interact.js');
-const IntermediateDataActions = require('actions/intermediate_data_actions');
+var _ = require('lodash');
+var React = require('react');
+var Reflux = require('reflux');
+var OverlayMixin = require('react-bootstrap').OverlayMixin;
+var Modal = require('react-bootstrap').Modal;
+var Button = require('react-bootstrap').Button;
+var interact = require('interact.js');
+var IntermediateDataActions = require('actions/intermediate_data_actions');
 
 var ChartWindow = React.createClass({
   mixins: [OverlayMixin],
@@ -22,14 +22,13 @@ var ChartWindow = React.createClass({
       change: Reflux.createAction('change'),
       reset: Reflux.createAction('reset')
     };
-    var configStore =  Reflux.createStore({
+    var configStore = Reflux.createStore({
       listenables: configActions,
       onChange(config) {
-        console.log('update config ======>', config);
         this.config = config;
         this.trigger(this.config);
       },
-      config: {}
+      config: this.props.component.config.getDefaultConfig()
     });
     return {
       width,
@@ -78,12 +77,12 @@ var ChartWindow = React.createClass({
                      height: this.state.chartOffset.height + 'px'}} >
           <View
             ref='view'
+            {...this.state.configStore.config}
             data={this.props.data}
             configStore={this.state.configStore}
             configActions={this.state.configActions}
             outerWidth={this.state.chartOffset.width}
             outerHeight={this.state.chartOffset.height}
-            {...this.state.configStore.config}
           />
         </div>
       </div>
@@ -125,16 +124,13 @@ var ChartWindow = React.createClass({
 
   setSize(w, h) {
     this.setState((previous, props)=>{
-      return {
-        width: w,
-        height: h,
-        chartOffset: {
-          x: 0,
-          y: 0,
-          width: w,
-          height: h - previous.fileNameHeight
-        }
-      };
+      previous.width = w;
+      previous.height = h;
+      previous.style.width = w;
+      previous.style.height = h;
+      previous.chartOffset.width = w;
+      previous.chartOffset.height = h - 25;
+      return previous;
     });
   },
 

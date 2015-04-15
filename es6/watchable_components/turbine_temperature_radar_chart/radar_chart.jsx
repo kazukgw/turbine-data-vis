@@ -7,6 +7,7 @@ var Axis = require('./axis');
 var Series = require('./series');
 var Legend = require('./legend');
 var TemperatureData = require('./temperature_data');
+var Config = require('./config');
 
 var pt = React.PropTypes;
 
@@ -42,48 +43,7 @@ var RadarChart = React.createClass({
   },
 
   getDefaultProps() {
-    return {
-      data: {},
-      size: 400,
-      topBottomPadding: 50,
-      leftRightPadding: 150,
-      colors: ['#0044dd', '#ff00ff'],
-      axis: {
-        auxAxisCount: 5,
-        axisLine: {
-          style: {
-            stroke: '#aaa'
-          }
-        },
-        axisTitle: {
-          style: {
-          }
-        },
-        auxAxisLine: {
-          style: {
-            stroke: '#abb'
-          }
-        }
-      },
-      series: {
-        point: {
-          attr: { r: 2 },
-          style: {}
-        },
-        polygon: {
-          attr: {},
-          style: { 'fill-opacity': 0 }
-        },
-      },
-      legend: {
-        line: {
-          style: { 'stroke-width': '2px' }
-        },
-        text: {
-          style: {}
-        }
-      }
-    }
+    return Config.getDefaultConfig();
   },
 
   getDynamicProps() {
@@ -131,16 +91,20 @@ var RadarChart = React.createClass({
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+  },
+
   render() {
     var self = this;
     var _props = this.getDynamicProps();
     return (
       <svg className='chart-container'
-           width={_props.outerWidth} height={_props.outerHeight}
+           width={this.props.outerWidth} height={this.props.outerHeight}
            viewBox={`0 0 ${_props.width} ${_props.height}`} >
 
         {_.range(this.props.data.getSeriesCount()).map((i)=>{
-          return (<Series {...self.getSeriesProps(i, _props)} />)
+          return (<Series key={i} {...self.getSeriesProps(i, _props)} />)
         })}
 
         <Axis {...this.getAxisProps(_props)} />
@@ -148,10 +112,6 @@ var RadarChart = React.createClass({
         <Legend {...this.getLegendProps(_props)} />
       </svg>
     );
-  },
-
-  componentDidMount() {
-    this.props.configActions.change(this.props);
   }
 });
 

@@ -1,11 +1,9 @@
 var _ = require('lodash');
 var React = require('react');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 
 var RadarChartPolygon = React.createClass({
-  mixins: [PureRenderMixin],
   propTypes: {
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     field: React.PropTypes.object.isRequired,
     seriesIndex: React.PropTypes.number.isRequired,
     style: React.PropTypes.object.isRequired

@@ -6,9 +6,9 @@ var Polygon = require('./polygon');
 var RadarChartSeries = React.createClass({
   propTypes: {
     index: React.PropTypes.number.isRequired,
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     field: React.PropTypes.object.isRequired,
-    color: React.PropTypes.array.isRequired,
+    color: React.PropTypes.string.isRequired,
     config: React.PropTypes.object.isRequired
   },
 
