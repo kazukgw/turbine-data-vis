@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var React = require('react');
 
-var RadarChartPointCircle = React.createClass({
+var PointCircle = React.createClass({
   propTypes: {
     r: React.PropTypes.number.isRequired,
     cx: React.PropTypes.number.isRequired,
@@ -17,7 +17,21 @@ var RadarChartPointCircle = React.createClass({
   }
 })
 
-var RadarChartPoint = React.createClass({
+var PointText = React.createClass({
+  propTypes: {
+    text: React.PropTypes.string.isRequired,
+    x: React.PropTypes.number.isRequired,
+    y: React.PropTypes.number.isRequired
+  },
+
+  render() {
+    return (
+      <text x={this.props.x} y={this.props.y}>{this.props.text}</text>
+    );
+  }
+});
+
+var Point = React.createClass({
   propTypes: {
     data: React.PropTypes.object.isRequired,
     field: React.PropTypes.object.isRequired,
@@ -32,13 +46,15 @@ var RadarChartPoint = React.createClass({
       <g>
         {p.data.rows.map((d, i)=>{
           return (
-            <RadarChartPointCircle
-              key={`radar-chart-circle-${i}`}
-              {...p.attr}
-              cx={p.field.getPointWithAxisIndex(i, d[this.props.seriesIndex + 1]).x}
-              cy={p.field.getPointWithAxisIndex(i, d[this.props.seriesIndex + 1]).y}
-              style={p.style}
-            />
+            <g>
+              <PointCircle
+                key={`point-circle-${i}`}
+                {...p.attr}
+                cx={p.field.getPointWithAxisIndex(i, d[this.props.seriesIndex + 1]).x}
+                cy={p.field.getPointWithAxisIndex(i, d[this.props.seriesIndex + 1]).y}
+                style={p.style}
+              />
+            </g>
           );
         })}
       </g>
@@ -46,4 +62,4 @@ var RadarChartPoint = React.createClass({
   }
 });
 
-module.exports = RadarChartPoint;
+module.exports = Point;

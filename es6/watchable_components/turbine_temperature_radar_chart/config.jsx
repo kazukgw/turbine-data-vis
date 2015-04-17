@@ -4,23 +4,27 @@ var Config = React.createClass({
     getDefaultConfig: function() {
       return {
         size: 400,
-        topBottomPadding: 50,
+        topBottomPadding: 80,
         leftRightPadding: 150,
         colors: ['#0044dd', '#ff00ff'],
         axis: {
           auxAxisCount: 5,
           axisLine: {
             style: {
-              stroke: '#aaa'
+              stroke: '#666'
             }
           },
           axisTitle: {
             style: {
+              fontSize: '14px',
+              fill: '#000000',
+              fillOpacity: 1
             }
           },
           auxAxisLine: {
             style: {
-              stroke: '#abb',
+              stroke: '#666',
+              strokeWidth: '1px',
               fillOpacity: 0
             }
           }
@@ -40,7 +44,11 @@ var Config = React.createClass({
             style: { strokeWidth: '2px' }
           },
           text: {
-            style: {}
+            style: {
+              fontSize: '14px',
+              fill: '#000000',
+              fillOpacity: 1
+            }
           }
         }
       };
@@ -95,7 +103,6 @@ var Config = React.createClass({
   render() {
     return (
       <div>
-        <h3> Turbine Temperature Data Radar Chart!! </h3>
         <form className="form-horizontal">
           <div className="form-group">
             <label className="col-sm-2 control-label">

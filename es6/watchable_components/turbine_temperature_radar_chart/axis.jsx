@@ -27,7 +27,7 @@ var RadarChartAxis = React.createClass({
       <g className='axis-container' style={{zIndex: 50}}>
         <g className='axis-line'>
           {degrees.map((d, i)=>{
-            var pos2 = p.field.getPointWithAxisIndex(i, p.field.dataRange);
+            var pos2 = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.1);
             return (
               <line
                 key={i}
@@ -37,15 +37,13 @@ var RadarChartAxis = React.createClass({
           })}
         </g>
 
-        <g className='axis-title' >
-          {degrees.map((d, i)=>{
-            var pos = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.1);
-            return (
-              <text
-                key={i}
-                style={p.config.axisTitle.style}
-                textAnchor='middle' x={pos.x} y={pos.y} >
-                {d}
+        <g className='axis-title'>
+          {degrees.map((deg, i)=>{
+            var pos = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.2);
+            return(
+              <text key={i} style={p.config.axisTitle.style}
+                textAnchor='middle' x={pos.x} y={pos.y}>
+                {deg + '[deg]'}
               </text>
             );
           })}
@@ -76,6 +74,7 @@ var RadarChartAxis = React.createClass({
               return (
                 <text
                   key={axisIndex + '-' + i}
+                  style={{fontSize: '12px', fill: '#000000', 'fillOpacity': 1}}
                   className='axis-auxAxis-axis-text'
                   textAnchor='start'
                   x={textPosition[i].x} y={textPosition[i].y} >
