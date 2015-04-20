@@ -14,6 +14,8 @@ var pt = React.PropTypes;
 var RadarChart = React.createClass({
   propTypes: {
     data: pt.instanceOf(TemperatureData).isRequired,
+    dataRangeMin: pt.number,
+    dataRangeMax: pt.number,
     size: pt.number,
     topBottomPadding: pt.number,
     leftRightPadding: pt.number,
@@ -57,6 +59,7 @@ var RadarChart = React.createClass({
       y: this.props.size / 2 + this.props.topBottomPadding
     };
     _props.field = new Field(this.props.data, this.props.size);
+    _props.field.setDataRange(this.props.dataRangeMin, this.props.dataRangeMax);
     _props.field.setCenter(_props.center.x, _props.center.y);
     _props.legendX = _props.width - this.props.leftRightPadding;
     _props.legendY = this.props.topBottomPadding;
@@ -104,7 +107,6 @@ var RadarChart = React.createClass({
         {_.range(this.props.data.getSeriesCount()).map((i)=>{
           return (<Series key={i} {...self.getSeriesProps(i, _props)} />)
         })}
-
 
         <Legend {...this.getLegendProps(_props)} />
       </svg>

@@ -13,7 +13,7 @@ var RadarChartPolygon = React.createClass({
     var self = this;
     var data = this.props.data.rows.map((d, i)=>{ return d[this.props.seriesIndex + 1]; });
     if( 180 > parseInt(this.props.data.getMaxDegrees()) ) {
-      data.push(this.props.data.dataRange[0]);
+      data.push(this.props.field.getDataRangeMin());
     }
     return data.map((d, i)=>{
       if( data.length - 1 === i) { i -= 1; }

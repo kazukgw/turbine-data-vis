@@ -57,12 +57,12 @@ class TemperatureData {
     return _(this.rows).map((r) => _.rest(r)).flatten().max();
   }
 
-  getMax() {
+  getMin() {
     return _(this.rows).map((r) => _.rest(r)).flatten().min();
   }
 
   getMaxDegrees() {
-    return _.max(this.getDegrees());
+    return _.max(this.getDegrees().map((d)=> parseInt(d)));
   }
 
   getMaxInSeries(seriesIndex) {

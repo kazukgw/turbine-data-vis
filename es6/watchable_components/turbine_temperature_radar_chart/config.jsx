@@ -1,11 +1,26 @@
 var React = require('react');
 var Config = React.createClass({
   statics: {
-    getDefaultConfig: function() {
+    getDefaultConfig: function(data) {
+      var dataRangeMin, dataRangeMax;
+      var max, min, sub;
+      if(data) {
+        max = parseInt(data.getMax());
+        min = parseInt(data.getMin());
+        sub = max - min;
+        dataRangeMin = min - sub;
+        dataRangeMax = max + sub/2;
+      } else {
+        dataRangeMin = 0;
+        dataRangeMax = 0;
+      }
       return {
+        data: data || {},
         size: 400,
         topBottomPadding: 80,
         leftRightPadding: 150,
+        dataRangeMin: dataRangeMin,
+        dataRangeMax: dataRangeMax,
         colors: ['#0044dd', '#ff00ff'],
         axis: {
           auxAxisCount: 5,
@@ -60,7 +75,8 @@ var Config = React.createClass({
   },
 
   getInitialState() {
-    return this.props;
+    var p = this.props;
+    return p;
   },
 
   componentDidMount() {
@@ -93,6 +109,16 @@ var Config = React.createClass({
       case 'point-r':
       val = parseInt(val);
       this.state.series.point.attr.r = val;
+      break;
+
+      case 'dataRangeMin':
+      val = parseInt(val);
+      this.state.dataRangeMin = val;
+      break;
+
+      case 'dataRangeMax':
+      val = parseInt(val);
+      this.state.dataRangeMax = val;
       break;
     }
     if(valid) {
@@ -169,6 +195,33 @@ var Config = React.createClass({
               />
             </div>
           </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              range min
+            </label>
+            <div className="col-sm-10">
+              <input type="number"
+                className="form-control"
+                data-name="dataRangeMin"
+                value={this.state.dataRangeMin}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              range max
+            </label>
+            <div className="col-sm-10">
+              <input type="number"
+                className="form-control"
+                data-name="dataRangeMax"
+                value={this.state.dataRangeMax}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+
         </form>
       </div>
     );

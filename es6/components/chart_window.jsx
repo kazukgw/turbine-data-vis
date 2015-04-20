@@ -58,6 +58,7 @@ var ChartWindow = React.createClass({
     return (
       <ConfigModal
         title={this.props.data.key}
+        {...this.state.configStore.config}
         configComponent={this.props.component.config}
         configStore={this.state.configStore}
         configActions={this.state.configActions}
@@ -109,13 +110,13 @@ var ChartWindow = React.createClass({
         this.config = config;
         this.trigger(this.config);
       },
-      config: this.getDefaultConfig()
+      config: this.getDefaultConfig(this.props.data)
     });
     return { action, store };
   },
 
-  getDefaultConfig() {
-    return this.props.component.config.getDefaultConfig();
+  getDefaultConfig(data) {
+    return this.props.component.config.getDefaultConfig(data);
   },
 
   getInitialState() {

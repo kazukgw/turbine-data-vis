@@ -27,7 +27,7 @@ var RadarChartAxis = React.createClass({
       <g className='axis-container' style={{zIndex: 50}}>
         <g className='axis-line'>
           {degrees.map((d, i)=>{
-            var pos2 = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.1);
+            var pos2 = p.field.getPointWithAxisIndex(i, p.field.getDataRangeMax(), 1.1);
             return (
               <line
                 key={i}
@@ -39,7 +39,8 @@ var RadarChartAxis = React.createClass({
 
         <g className='axis-title'>
           {degrees.map((deg, i)=>{
-            var pos = p.field.getPointWithAxisIndex(i, p.field.dataRange * 1.2);
+            var pos = p.field.getPointWithAxisIndex(i, p.field.getDataRangeMax(), 1.2);
+            // pos = pos.multiplyScalar(1.2);
             return(
               <text key={i} style={p.config.axisTitle.style}
                 textAnchor='middle' x={pos.x} y={pos.y}>
@@ -51,23 +52,26 @@ var RadarChartAxis = React.createClass({
 
         <g className='axis-auxAxis'>
           {_.range(p.config.auxAxisCount + 1).map((axisIndex)=>{
-            var textPosition = [];
-            var range = p.field.dataRange / p.config.auxAxisCount * axisIndex;
+            var max = p.field.getDataRangeMax();
+            var min = p.field.getDataRangeMin();
+            var sub = max - min;
+            var d = sub / p.config.auxAxisCount;
+            var range =  min + (d * axisIndex);
 
-            var axisAuxLines = _degrees.map((d, i)=>{
-              var pos = p.field.getPointWithAxisIndex(i, range);
-              var center = p.field.getCenter();
-              var r = p.field.getLengthWithValue(range);
-              textPosition.push(pos);
-              return (
-                <circle
-                  key={axisIndex + '-' + i}
-                  className='axis-auxAxis-axis-line'
-                  style={p.config.auxAxisLine.style}
-                  cx={center.x} cy={center.y}
-                  r={r}
-                />
-              );
+            var center = p.field.getCenter();
+            var r = p.field.getLengthWithValue(range);
+            var axisAuxLines = (
+              <circle
+                key={axisIndex}
+                className='axis-auxAxis-axis-line'
+                style={p.config.auxAxisLine.style}
+                cx={center.x} cy={center.y}
+                r={r}
+              />
+            );
+
+            var textPosition = _degrees.map((d, i)=>{
+              return p.field.getPointWithAxisIndex(i, range);
             });
 
             var axisAuxText = _degrees.map((d, i)=>{
