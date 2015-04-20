@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var is = require('is_js');
 var React = require('react');
+var Reflux = require('reflux');
 
 var Field = require('./field');
 var Axis = require('./axis');
