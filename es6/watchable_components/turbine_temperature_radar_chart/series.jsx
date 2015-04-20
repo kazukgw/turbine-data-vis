@@ -36,19 +36,19 @@ var RadarChartSeries = React.createClass({
       <g className='series-container'
         dataSeriesIndex={p.index} style={{zIndex: 100}} >
         <g dataSeriesName={this.getSeriesName()} dataSeriesIndex={p.index}
-           className='point-container'>
-          <Point
-            data={p.data} field={p.field}
-            seriesIndex={p.index} attr={p.config.point.attr}
-            style={this.getPointStyle()}
-          />
-        </g>
-        <g dataSeriesName={this.getSeriesName()} dataSeriesIndex={p.index}
            className='polygon-container'>
           <Polygon
             data={p.data} field={p.field}
             seriesIndex={p.index}
             style={this.getPolygonStyle()}
+          />
+        </g>
+        <g dataSeriesName={this.getSeriesName()} dataSeriesIndex={p.index}
+           className='point-container'>
+          <Point
+            data={p.data} field={p.field}
+            seriesIndex={p.index} attr={p.config.point.attr}
+            style={this.getPointStyle()}
           />
         </g>
       </g>
