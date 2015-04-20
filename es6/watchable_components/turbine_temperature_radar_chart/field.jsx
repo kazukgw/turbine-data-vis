@@ -6,7 +6,10 @@ class RadarChartField {
     this.center = new Vector();
     this.data = data;
     this.degrees = data.getDegrees();
-    this.dataRange = data.getMax();
+    var max = parseInt(data.getMax());
+    var min = parseInt(data.getMin());
+    var sub = max - min;
+    this.dataRange = [min - sub, max + sub/2];
   }
 
   setCenter(x, y) {
@@ -25,16 +28,46 @@ class RadarChartField {
     return this.center;
   }
 
-  setDataRange(range) {
-    this.dataRange = range;
+  setDataRange(min, max) {
+    var _min = parseInt(this.data.getMin());
+    var _max = parseInt(this.data.getMax());
+    var _sub = _max - _min;
+
+    if(min == null) {
+      min = _min - _sub;
+    }
+    if(max == null) {
+      max = _max + _sub/2;
+    }
+
+    this.dataRange = [min, max];
   }
 
-  getPointWithAxisIndex(axisIndex, value) {
+  getDataRangeMax() {
+    return parseFloat(this.dataRange[1]);
+  }
+
+  getDataRangeMin() {
+    return parseFloat(this.dataRange[0]);
+  }
+
+  getLengthWithValue(value) {
+    var _val = (parseInt(value) - parseInt(this.dataRange[0]));
+    var _max = (parseInt(this.dataRange[1]) - parseInt(this.dataRange[0]));
+    return _val / _max * parseInt(this.size) / 2;
+  }
+
+  getPointWithAxisIndex(axisIndex, value, magnif) {
     var degree = this.degrees[axisIndex];
     var x = Math.cos(this._toRadian(degree));
     var y = Math.sin(this._toRadian(degree));
     var vec = new Vector(y, - x);
-    var scalar = parseInt(value) / parseInt(this.dataRange) * parseInt(this.size) / 2;
+    var _val = (parseFloat(value) - parseFloat(this.dataRange[0]));
+    var _max = (parseFloat(this.dataRange[1]) - parseFloat(this.dataRange[0]));
+    var scalar = _val / _max * parseInt(this.size) / 2;
+    if(magnif) {
+      scalar = scalar * magnif;
+    }
     return this.center.clone().add(vec.multiplyScalar(scalar));
   }
 

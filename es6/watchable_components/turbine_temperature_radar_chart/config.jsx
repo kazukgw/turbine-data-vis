@@ -1,26 +1,46 @@
 var React = require('react');
 var Config = React.createClass({
   statics: {
-    getDefaultConfig: function() {
+    getDefaultConfig: function(data) {
+      var dataRangeMin, dataRangeMax;
+      var max, min, sub;
+      if(data) {
+        max = parseInt(data.getMax());
+        min = parseInt(data.getMin());
+        sub = max - min;
+        dataRangeMin = min - sub;
+        dataRangeMax = max + sub/2;
+      } else {
+        dataRangeMin = 0;
+        dataRangeMax = 0;
+      }
       return {
+        data: data || {},
         size: 400,
-        topBottomPadding: 50,
+        topBottomPadding: 80,
         leftRightPadding: 150,
+        dataRangeMin: dataRangeMin,
+        dataRangeMax: dataRangeMax,
         colors: ['#0044dd', '#ff00ff'],
         axis: {
           auxAxisCount: 5,
           axisLine: {
             style: {
-              stroke: '#aaa'
+              stroke: '#666'
             }
           },
           axisTitle: {
             style: {
+              fontSize: '14px',
+              fill: '#000000',
+              fillOpacity: 1
             }
           },
           auxAxisLine: {
             style: {
-              stroke: '#abb'
+              stroke: '#666',
+              strokeWidth: '1px',
+              fillOpacity: 0
             }
           }
         },
@@ -39,7 +59,11 @@ var Config = React.createClass({
             style: { strokeWidth: '2px' }
           },
           text: {
-            style: {}
+            style: {
+              fontSize: '14px',
+              fill: '#000000',
+              fillOpacity: 1
+            }
           }
         }
       };
@@ -51,7 +75,8 @@ var Config = React.createClass({
   },
 
   getInitialState() {
-    return this.props;
+    var p = this.props;
+    return p;
   },
 
   componentDidMount() {
@@ -75,7 +100,6 @@ var Config = React.createClass({
       case 'color1':
       case 'color2':
       if(/^#[0-9a-fA-F]{6}$/.test) {
-        console.log('color' + (name.match(/(\d)/)[1]*1-1), val);
         this.state.colors[name.match(/(\d)/)[1]*1-1] = val;
       } else {
         valid = false;
@@ -86,6 +110,16 @@ var Config = React.createClass({
       val = parseInt(val);
       this.state.series.point.attr.r = val;
       break;
+
+      case 'dataRangeMin':
+      val = parseInt(val);
+      this.state.dataRangeMin = val;
+      break;
+
+      case 'dataRangeMax':
+      val = parseInt(val);
+      this.state.dataRangeMax = val;
+      break;
     }
     if(valid) {
       this.props.configActions.change(this.state);
@@ -95,7 +129,6 @@ var Config = React.createClass({
   render() {
     return (
       <div>
-        <h3> Turbine Temperature Data Radar Chart!! </h3>
         <form className="form-horizontal">
           <div className="form-group">
             <label className="col-sm-2 control-label">
@@ -162,6 +195,33 @@ var Config = React.createClass({
               />
             </div>
           </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              range min
+            </label>
+            <div className="col-sm-10">
+              <input type="number"
+                className="form-control"
+                data-name="dataRangeMin"
+                value={this.state.dataRangeMin}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="col-sm-2 control-label">
+              range max
+            </label>
+            <div className="col-sm-10">
+              <input type="number"
+                className="form-control"
+                data-name="dataRangeMax"
+                value={this.state.dataRangeMax}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+
         </form>
       </div>
     );

@@ -31,7 +31,9 @@ gulp.task('watchify', function(){
   bundler.on('update', _bundle);
   _bundle();
   function _bundle() {
-    console.log('rebundle ====>', arguments[0]);
+    if(arguments[0]) {
+      console.log('rebundle ====>', arguments[0]);
+    }
     return bundler.bundle()
             .pipe(source('./js/index.js'))
             .pipe(gulp.dest('./'));

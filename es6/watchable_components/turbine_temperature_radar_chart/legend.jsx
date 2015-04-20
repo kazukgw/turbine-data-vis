@@ -30,8 +30,6 @@ var RadarChartLegend = React.createClass({
     return style;
   },
 
-  getTextStyle() { return {} },
-
   render() {
     var self = this;
     return (
@@ -44,7 +42,7 @@ var RadarChartLegend = React.createClass({
                 x1='0' y1={20 * i}
                 x2='20' y2={20 * i}
               />
-              <text x='25' y={20 * i} style={self.getTextStyle(i)}
+              <text x='25' y={20 * i} style={self.props.config.text.style}
                 transform='translate(0, 5)'>
                 {self.props.data.getSeriesName(i)}
               </text>
