@@ -57,6 +57,10 @@ class TemperatureData {
     return _(this.rows).map((r) => _.rest(r)).flatten().max();
   }
 
+  getMax() {
+    return _(this.rows).map((r) => _.rest(r)).flatten().min();
+  }
+
   getMaxDegrees() {
     return _.max(this.getDegrees());
   }

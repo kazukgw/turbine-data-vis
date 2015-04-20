@@ -48,8 +48,6 @@ var ChartWindow = React.createClass({
             outerHeight={this.state.chartOffset.height}
           />
         </div>
-        <canvas ref="dummyCanvas" style={{display: 'none'}}></canvas>
-        <a ref="dummyDownloadLink" style={{display: 'none'}}></a>
       </div>
     );
   },
@@ -76,21 +74,21 @@ var ChartWindow = React.createClass({
   handleClickDownloadAsImg() {
     var svg = React.findDOMNode(this.refs.view);
     var svgStr = (new XMLSerializer()).serializeToString(svg);
-    var svgBlob = new Blob([decodeURIComponent(svgStr)], { type: "image/svg+xml;charset=utf-8" });
+    var svgBlob = new Blob([decodeURIComponent(svgStr)],
+                           { type: "image/svg+xml;charset=utf-8" });
     var svgURL = URL.createObjectURL(svgBlob);
 
-    var canvas = React.findDOMNode(this.refs.dummyCanvas);
+    var canvas = document.createElement('canvas');
     canvas.setAttribute('width', svg.getAttribute('width'))
     canvas.setAttribute('height', svg.getAttribute('height'))
-    var ctx = canvas.getContext("2d");
 
-    var dummyDownloadLink = React.findDOMNode(this.refs.dummyDownloadLink);
+    var dummyLink = document.createElement('a');
     var img = new Image();
     img.onload = ()=>{
-      ctx.drawImage(img, 0, 0);
-      dummyDownloadLink.setAttribute('href', canvas.toDataURL('image/png'));
-      dummyDownloadLink.setAttribute('download', 'chart.png');
-      dummyDownloadLink.click();
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      dummyLink.setAttribute('href', canvas.toDataURL('image/png'));
+      dummyLink.setAttribute('download', 'chart.png');
+      dummyLink.click();
       URL.revokeObjectURL(svgURL);
     };
     img.src = svgURL;

@@ -6,7 +6,7 @@ class RadarChartField {
     this.center = new Vector();
     this.data = data;
     this.degrees = data.getDegrees();
-    this.dataRange = data.getMax();
+    this.dataRange = [data.getMin(), data.getMax()];
   }
 
   setCenter(x, y) {
@@ -25,12 +25,14 @@ class RadarChartField {
     return this.center;
   }
 
-  setDataRange(range) {
-    this.dataRange = range;
+  setDataRange(min, max) {
+    this.dataRange = [min, max];
   }
 
   getLengthWithValue(value) {
-    return parseInt(value) / parseInt(this.dataRange) * parseInt(this.size) / 2;
+    return (parseInt(value) - parseInt(this.dataRange[0])) /
+      (parseInt(this.dataRange[1]) - parseInt(this.dataRange[0])) *
+      parseInt(this.size) / 2;
   }
 
   getPointWithAxisIndex(axisIndex, value) {
