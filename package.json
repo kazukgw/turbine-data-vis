@@ -12,7 +12,7 @@
     "express": "^4.12.2"
   },
   "devDependencies": {
-    "babelify": "^5.0.4",
+    "babelify": "^6.0.2",
     "browserify": "^9.0.7",
     "color": "^0.8.0",
     "deepmerge": "^0.2.7",

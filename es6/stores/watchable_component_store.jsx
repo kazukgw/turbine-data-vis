@@ -9,7 +9,8 @@ var WatchableComponentStore = Reflux.createStore({
   },
 
   components: {
-    turbineTemperatureRadarChart: require('watchable_components/turbine_temperature_radar_chart/index')
+    turbineTemperatureRadarChart:
+      require('watchable_components/turbine_temperature_radar_chart/index')
   }
 });
 

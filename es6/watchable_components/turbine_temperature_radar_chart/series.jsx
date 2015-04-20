@@ -33,7 +33,8 @@ var RadarChartSeries = React.createClass({
   render() {
     var p = this.props;
     return (
-      <g className='series-container' dataSeriesIndex={p.index}>
+      <g className='series-container'
+        dataSeriesIndex={p.index} style={{zIndex: 100}} >
         <g dataSeriesName={this.getSeriesName()} dataSeriesIndex={p.index}
            className='point-container'>
           <Point

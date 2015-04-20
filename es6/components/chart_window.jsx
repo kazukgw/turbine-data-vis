@@ -2,7 +2,7 @@ var _ = require('lodash');
 var React = require('react');
 var Reflux = require('reflux');
 var OverlayMixin = require('react-bootstrap').OverlayMixin;
-var Modal = require('react-bootstrap').Modal;
+var ConfigModal = require('components/config_modal');
 var Button = require('react-bootstrap').Button;
 var interact = require('interact.js');
 var IntermediateDataActions = require('actions/intermediate_data_actions');
@@ -15,45 +15,8 @@ var ChartWindow = React.createClass({
     component: React.PropTypes.object.isRequired
   },
 
-  getInitialState() {
-    var width = 700;
-    var height = 500;
-    var configActions = {
-      change: Reflux.createAction('change'),
-      reset: Reflux.createAction('reset')
-    };
-    var configStore = Reflux.createStore({
-      listenables: configActions,
-      onChange(config) {
-        this.config = config;
-        this.trigger(this.config);
-      },
-      config: this.props.component.config.getDefaultConfig()
-    });
-    return {
-      width,
-      height,
-      fileNameHeight: 25,
-      chartOffset: {
-        x: 0,
-        y: 0,
-        width: width,
-        height: height - 25
-      },
-      style: {
-        width,
-        height,
-        position: 'absolute'
-      },
-      isModalOpen: false,
-      configStore: configStore,
-      configActions: configActions
-    };
-  },
-
   componentDidMount() {
-    this._interactize();
-    // でモーダルのコンフィグヴューを設定する
+    this.interactize();
   },
 
   render() {
@@ -90,36 +53,94 @@ var ChartWindow = React.createClass({
   },
 
   renderOverlay() {
-    if (!this.state.isModalOpen) {
-      return <span/>;
-    }
+    if (!this.state.isModalOpen) { return <span/>; }
 
-    var Config = this.props.component.config;
     return (
-      <Modal bsStyle='primary'
+      <ConfigModal
         title={this.props.data.key}
-        onRequestHide={this.handleModalToggle}>
-        <div className='modal-body'>
-          <Config
-            {...this.state.configStore.config}
-            configStore={this.state.configStore}
-            configActions={this.state.configActions} />
-        </div>
-        <div className='modal-footer'>
-          <Button onClick={this.handleModalToggle}>Close</Button>
-        </div>
-      </Modal>
+        {...this.state.configStore.config}
+        configComponent={this.props.component.config}
+        configStore={this.state.configStore}
+        configActions={this.state.configActions}
+        handleModalToggle={this.handleModalToggle}
+        handleClickDownloadAsImg={this.handleClickDownloadAsImg}
+      />
     );
   },
 
   handleModalToggle() {
-    this.setState({
-      isModalOpen: !this.state.isModalOpen
-    });
+    this.setState({ isModalOpen: !this.state.isModalOpen });
+  },
+
+  handleClickDownloadAsImg() {
+    var svg = React.findDOMNode(this.refs.view);
+    var svgStr = (new XMLSerializer()).serializeToString(svg);
+    var svgBlob = new Blob([decodeURIComponent(svgStr)],
+                           { type: "image/svg+xml;charset=utf-8" });
+    var svgURL = URL.createObjectURL(svgBlob);
+
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('width', svg.getAttribute('width'))
+    canvas.setAttribute('height', svg.getAttribute('height'))
+
+    var dummyLink = document.createElement('a');
+    var img = new Image();
+    img.onload = ()=>{
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      dummyLink.setAttribute('href', canvas.toDataURL('image/png'));
+      dummyLink.setAttribute('download', 'chart.png');
+      dummyLink.click();
+      URL.revokeObjectURL(svgURL);
+    };
+    img.src = svgURL;
   },
 
   handleClickRemoveButton() {
     IntermediateDataActions.remove(this.props.data.key);
+  },
+
+  initConfigActionAndStore() {
+    var action = {
+      change: Reflux.createAction('change'),
+      reset: Reflux.createAction('reset')
+    };
+    var store = Reflux.createStore({
+      listenables: action,
+      onChange(config) {
+        this.config = config;
+        this.trigger(this.config);
+      },
+      config: this.getDefaultConfig(this.props.data)
+    });
+    return { action, store };
+  },
+
+  getDefaultConfig(data) {
+    return this.props.component.config.getDefaultConfig(data);
+  },
+
+  getInitialState() {
+    var [width, height] = [700, 500];
+    var actionAndStore = this.initConfigActionAndStore();
+    return {
+      width,
+      height,
+      fileNameHeight: 25,
+      chartOffset: {
+        x: 0,
+        y: 0,
+        width: width,
+        height: height - 25
+      },
+      style: {
+        width,
+        height,
+        position: 'absolute'
+      },
+      isModalOpen: false,
+      configStore: actionAndStore.store,
+      configActions: actionAndStore.action
+    };
   },
 
   setSize(w, h) {
@@ -134,7 +155,7 @@ var ChartWindow = React.createClass({
     });
   },
 
-  _interactize() {
+  interactize() {
     var self = this;
     interact(React.findDOMNode(this.refs.chartWindow))
       .draggable({
@@ -145,13 +166,10 @@ var ChartWindow = React.createClass({
         },
         onmove: (e)=>{
           var target = e.target,
-          // keep the dragged position in the data-x/data-y attributes
           x = (parseFloat(target.getAttribute('data-x')) || 0) + e.dx,
           y = (parseFloat(target.getAttribute('data-y')) || 0) + e.dy;
-          // translate the element
           target.style.webkitTransform =
           target.style.transform = `translate(${x}px, ${y}px)`;
-          // update the posiion attributes
           target.setAttribute('data-x', x);
           target.setAttribute('data-y', y);
         }
