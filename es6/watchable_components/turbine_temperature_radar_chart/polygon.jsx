@@ -12,6 +12,8 @@ var RadarChartPolygon = React.createClass({
   getPoints() {
     var self = this;
     var data = this.props.data.rows.map((d, i)=>{ return d[this.props.seriesIndex + 1]; });
+    // 最大角度が 180 より小さい場合は、始点と最終点を結ぶと
+    // へんな図形になってしまうため必ず最後に中心を通るようにする
     var lt180 = 180 > parseInt(this.props.data.getMaxDegrees());
     if(lt180) {
       data.push(this.props.field.getDataRangeMin());
@@ -24,6 +26,7 @@ var RadarChartPolygon = React.createClass({
 
   getStyle() {
     var style = this.props.style;
+    style.pointerEvents = 'none';
     return style;
   },
 
