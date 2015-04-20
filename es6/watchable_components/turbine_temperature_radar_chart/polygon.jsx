@@ -12,11 +12,12 @@ var RadarChartPolygon = React.createClass({
   getPoints() {
     var self = this;
     var data = this.props.data.rows.map((d, i)=>{ return d[this.props.seriesIndex + 1]; });
-    if( 180 > parseInt(this.props.data.getMaxDegrees()) ) {
+    var lt180 = 180 > parseInt(this.props.data.getMaxDegrees());
+    if(lt180) {
       data.push(this.props.field.getDataRangeMin());
     }
     return data.map((d, i)=>{
-      if( data.length - 1 === i) { i -= 1; }
+      if( lt180 && data.length - 1 === i) { i -= 1; }
       return self.props.field.getPointWithAxisIndex(i, d).toArray().join(',');
     }).join(' ');
   },
