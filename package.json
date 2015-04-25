@@ -36,6 +36,7 @@
     "react-bootstrap": "^0.20.2",
     "react-router": "^0.13.2",
     "reflux": "^0.2.7",
+    "three": "^0.71.0",
     "vinyl-source-stream": "^1.0.0",
     "vue": "^0.11.5",
     "watchify": "^3.0.0"

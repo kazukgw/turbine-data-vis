@@ -14,7 +14,8 @@ var File = React.createClass({
 
   handleClickRender(e) {
     IntermediateDataActions.load(this.props.fileName,
-                                 'turbineTemperatureRadarChart');
+                                 // 'turbineTemperatureRadarChart');
+                                 'turbineTemperature3DContour');
   },
 
   handleClickRemove(e) {
