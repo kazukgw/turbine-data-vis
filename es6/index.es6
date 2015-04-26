@@ -29,12 +29,12 @@ var Navbar = React.createClass({
         <h2 id="usage">Usage</h2>
         <h3 id="1-">1. データを追加</h3>
         <p>CSVファイルをFileListに追加します</p>
-        <p><img style={{width: '500px'}} src="/img/drop_file_here_or_click.png" alt="drop_file_here_or_click" /></p>
+        <p><img style={{width: '500px'}} src="img/drop_file_here_or_click.png" alt="drop_file_here_or_click" /></p>
         <h3 id="2-">2. 描画</h3>
         <p>FileList に追加されたファイルをクリックして
         でてきたメニューからさらに <code>Render</code> ボタンをクリックします。</p>
-        <p><img style={{width: '500px'}} src="/img/click_render.png" alt="click_render" /></p>
-        <p><img style={{width: '500px'}} src="/img/radar_chart.png" alt="radar_chart" /></p>
+        <p><img style={{width: '500px'}} src="img/click_render.png" alt="click_render" /></p>
+        <p><img style={{width: '500px'}} src="img/radar_chart.png" alt="radar_chart" /></p>
                 </div>
         <div className='modal-footer'>
           <Button onClick={this.handleModalToggle}>Close</Button>
